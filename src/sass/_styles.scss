@@ -23,8 +23,7 @@
   border-radius: 4px;
   cursor: pointer;
 
-  transition: box-shadow 0.15s ease-in-out,
-    transform 0.15s ease-in-out;
+  transition: box-shadow 0.15s ease-in-out, transform 0.15s ease-in-out;
 }
 
 .search-form-btn:is(:hover, :focus) {
