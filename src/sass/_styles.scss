@@ -1,29 +1,33 @@
-.find-image {
+.search-form {
   display: flex;
   justify-content: center;
-  padding: 28px 0;
+  padding: 16px 0;
+
   background-color: #46c8ff;
 }
 
 .search-form-input {
   padding: 0 10px;
-  height: 28px;
+  height: 32px;
+
   border: none;
-  border-radius: 4px;
+  border-radius: 4px 0 0 4px;
 }
 
 .search-form-btn {
   padding: 0 10px;
-  height: 28px;
-  color: #00b3ff;
-  background-color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  height: 32px;
 
-  transition: box-shadow 0.1s ease-in-out;
+  color: #ffffff;
+  background-color: #006699;
+  border: none;
+  border-radius: 0 4px 4px 0;
+
+  cursor: pointer;
+  
+  transition: background-color 0.2s ease-in-out;
 }
 
 .search-form-btn:is(:hover, :focus) {
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+  background-color: #0088cc;
 }
