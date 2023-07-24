@@ -1,4 +1,3 @@
-
 export default function createMarkup(data) {
   return data.map(
     ({
@@ -11,33 +10,36 @@ export default function createMarkup(data) {
       downloads,
     }) => {
       return `<div class="photo-card">
-
-      <a href="${largeImageURL}">
-        <img class="img-item" src="${webformatURL}" alt="${tags}" loading="lazy" />
-      </a>
-
-      <div class="info">
-        <p class="info-item">
-          <b>Likes</b>
-          ${likes}
-        </p>
-
-        <p class="info-item">
-          <b>Views</b>
-          ${views}
-        </p>
-
-        <p class="info-item">
-          <b>Comments</b>
-          ${comments}
-        </p>
-
-        <p class="info-item">
-          <b>Downloads</b>
-          ${downloads}
-        </p>
-      </div>
-    </div>`;
+        <a class="img-link" href="${largeImageURL}">
+          <img class="img-item" src="${webformatURL}" alt="${tags}" loading="lazy" />
+        </a>
+        <ul class="info">
+        <li>
+          <p class="info-item">
+            <b>Likes</b>
+            ${likes}
+          </p>
+        </li>
+        <li>
+          <p class="info-item">
+            <b>Views</b>
+            ${views}
+          </p>
+        </li>
+        <li>
+          <p class="info-item">
+            <b>Comments</b>
+            ${comments}
+          </p>
+        </li>
+        <li>
+          <p class="info-item">
+            <b>Downloads</b>
+            ${downloads}
+          </p>
+        </li>
+        </ul>
+      </div>`;
     }
   );
 }

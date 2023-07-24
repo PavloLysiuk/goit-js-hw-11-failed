@@ -1,12 +1,11 @@
 import { getGallery } from './find-image-api';
-import createMarkup from './create-markup';
+import createMarkup from './gallery-markup';
 import { lightbox } from './simple-lightbox';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const selectors = {
   form: document.querySelector('.search-form'),
   gallery: document.querySelector('.gallery'),
-  loadMoreBtn: document.querySelector('.load-more'),
   loadMoreGuard: document.querySelector('.js-guard'),
 };
 
@@ -27,7 +26,7 @@ const options = {
 const observer = new IntersectionObserver(onInfiniteScroll, options);
 
 let searchQuery = '';
-let page;
+let page = 1;
 
 async function onSearchClick(e) {
   e.preventDefault();
@@ -37,8 +36,23 @@ async function onSearchClick(e) {
   if (!searchQuery.trim()) {
     return;
   }
-  await renderCards();
-  if (selectors.gallery.children.length === 40) {
+
+  const {
+    data: { hits, totalHits },
+  } = await getGallery(searchQuery, page);
+
+  if (!totalHits) {
+    throw new Error(response.statusText);
+  } else if (page === 1) {
+    Notify.info(`Hooray! We found ${totalHits} images.`);
+  }
+
+  selectors.gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
+
+  if (totalHits <= page * 40) {
+    Notify.info("We're sorry, but you've reached the end of search results.");
+    observer.unobserve(selectors.loadMoreGuard);
+  } else {
     observer.observe(selectors.loadMoreGuard);
   }
 }
@@ -53,28 +67,38 @@ function onInfiniteScroll(entries) {
 
 async function onLoadeMore() {
   page += 1;
-  await renderCards();
-}
+  const {
+    data: { hits, totalHits },
+  } = await getGallery(searchQuery, page);
 
-async function renderCards() {
-  try {
-    const {
-      data: { hits, totalHits },
-    } = await getGallery(searchQuery, page);
-    if (!totalHits) {
-      throw new Error('Empty');
-    } else if (page === 1) {
-      Notiflix.Notify.info(`Hooray! We found ${totalHits} images.`);
-    }
-    selectors.gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
-    if (totalHits <= page * 40) {
-      Notify.info("We're sorry, but you've reached the end of search results.");
-      observer.unobserve(selectors.loadMoreGuard);
-    }
-  } catch (error) {
+  if (!totalHits) {
     Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
+  } else {
+    selectors.gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
   }
-  simpleLightbox.refresh();
 }
+
+// async function renderCards() {
+//   try {
+//     const {
+//       data: { hits, totalHits },
+//     } = await getGallery(searchQuery, page);
+//     if (!totalHits) {
+//       throw new Error(response.statusText);
+//     } else if (page === 1) {
+//       Notify.info(`Hooray! We found ${totalHits} images.`);
+//     }
+//     selectors.gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
+//     if (totalHits <= page * 40) {
+//       Notify.info("We're sorry, but you've reached the end of search results.");
+//       observer.unobserve(selectors.loadMoreGuard);
+//     }
+//   } catch (error) {
+//     Notify.failure(
+//       'Sorry, there are no images matching your search query. Please try again.'
+//     );
+//   }
+//   simpleLightbox.refresh();
+// }
