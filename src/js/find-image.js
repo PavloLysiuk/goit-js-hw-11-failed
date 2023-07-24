@@ -60,12 +60,12 @@ async function onSearchClick(e) {
 function onInfiniteScroll(entries) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      onLoadeMore();
+      onLoadMore();
     }
   });
 }
 
-async function onLoadeMore() {
+async function onLoadMore() {
   page += 1;
   const {
     data: { hits, totalHits },
