@@ -53,6 +53,7 @@ async function onSearch(e) {
     } else {
       selectors.loadMoreBtn.classList.add('is-hidden');
     }
+
     gallery.refresh();
   } catch (error) {
     console.error('An error occurred during the search:', error);
