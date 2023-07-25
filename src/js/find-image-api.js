@@ -14,7 +14,7 @@ const params = {
 
 export default class AxiosApiService {
   constructor() {
-    // this.searchQuery = '';
+    this.searchQuery = '';
     this.page = 1;
   }
 
