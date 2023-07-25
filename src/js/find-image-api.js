@@ -21,24 +21,10 @@ export default class AxiosApiService {
   }
 
   async fetchImages() {
-    try {
-      const url = `?q=${this.searchQuery}&page=${this.page}`;
-      const response = await axios.get(url, { params });
-
-      this.incrementPage();
-      return response.data;
-    } catch (error) {
-      if (error.response) {
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
-      } else if (error.request) {
-        console.log(error.request);
-      } else {
-        console.log('Error', error.message);
-      }
-      console.log(error.config);
-    }
+    const url = `?q=${this.searchQuery}&page=${this.page}`;
+    const response = await axios.get(url, { params });
+    this.incrementPage();
+    return response.data;
   }
 
   incrementPage() {
