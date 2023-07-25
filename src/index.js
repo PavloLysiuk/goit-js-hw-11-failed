@@ -10,11 +10,12 @@ const selectors = {
   searchForm: document.querySelector('#search-form'),
   gallery: document.querySelector('.gallery'),
   loadMoreBtn: document.querySelector('.load-more'),
+  spinner: document.querySelector('.loader'),
 };
 
-let totalHits = 0;
+selectors.spinner.classList.add('is-hidden');
 
-selectors.loadMoreBtn.classList.add('is-hidden');
+let totalHits = 0;
 
 selectors.searchForm.addEventListener('submit', onSearch);
 selectors.loadMoreBtn.addEventListener('click', onLoadMore);
@@ -23,8 +24,7 @@ async function onSearch(e) {
   try {
     e.preventDefault();
     removeMarkup();
-
-    selectors.loadMoreBtn.classList.add('is-hidden');
+    selectors.spinner.classList.remove('is-hidden');
 
     if (e.currentTarget.elements.searchQuery.value.trim() === '') {
       return Notify.failure('Please, enter a search query.');
@@ -43,19 +43,16 @@ async function onSearch(e) {
     }
 
     totalHits = images.totalHits;
-
     Notify.success(`Hooray! We found ${totalHits} images.`);
-
     totalHits -= images.hits.length;
-
     addToHTML(galleryMarkup(images.hits));
+    selectors.spinner.classList.add('is-hidden');
 
     if (totalHits !== 0) {
       selectors.loadMoreBtn.classList.remove('is-hidden');
     } else {
       selectors.loadMoreBtn.classList.add('is-hidden');
     }
-
     gallery.refresh();
   } catch (error) {
     console.error('An error occurred during the search:', error);
