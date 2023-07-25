@@ -5,8 +5,8 @@ export default function smoothScroll() {
 
   setTimeout(() => {
     window.scrollBy({
-      top: cardHeight * 4,
+      top: cardHeight * 1,
       behavior: 'smooth',
     });
-  }, 300);
+  }, 0);
 }
