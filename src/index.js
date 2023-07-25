@@ -59,6 +59,9 @@ async function onSearch(e) {
     gallery.refresh();
   } catch (error) {
     console.error('An error occurred during the search:', error);
+    console.error('Error response:', error.response);
+    console.error('Error request:', error.request);
+    console.error('Error config:', error.config);
     Notify.failure('Oops! Something went wrong. Please try again later.');
   }
 }
