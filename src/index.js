@@ -20,42 +20,47 @@ selectors.searchForm.addEventListener('submit', onSearch);
 selectors.loadMoreBtn.addEventListener('click', onLoadMore);
 
 async function onSearch(e) {
-  e.preventDefault();
-  removeMarkup();
+  try {
+    e.preventDefault();
+    removeMarkup();
 
-  selectors.loadMoreBtn.classList.add('is-hidden');
-
-  if (e.currentTarget.elements.searchQuery.value.trim() === '') {
-    return Notify.failure('Please, enter a search query.');
-  }
-
-  axiosApiService.resetPage();
-  axiosApiService.query = e.currentTarget.elements.searchQuery.value.trim();
-
-  const images = await axiosApiService.fetchImages();
-
-  if (images.hits.length === 0) {
-    Notify.failure(
-      'Sorry, there are no images matching your search query. Please try again.'
-    );
-    return;
-  }
-
-  totalHits = images.totalHits;
-
-  Notify.success(`Hooray! We found ${totalHits} images.`);
-
-  totalHits -= images.hits.length;
-
-  addToHTML(galleryMarkup(images.hits));
-
-  if (totalHits !== 0) {
-    selectors.loadMoreBtn.classList.remove('is-hidden');
-  } else {
     selectors.loadMoreBtn.classList.add('is-hidden');
-  }
 
-  gallery.refresh();
+    if (e.currentTarget.elements.searchQuery.value.trim() === '') {
+      return Notify.failure('Please, enter a search query.');
+    }
+
+    axiosApiService.resetPage();
+    axiosApiService.query = e.currentTarget.elements.searchQuery.value.trim();
+
+    const images = await axiosApiService.fetchImages();
+
+    if (images.hits.length === 0) {
+      Notify.failure(
+        'Sorry, there are no images matching your search query. Please try again.'
+      );
+      return;
+    }
+
+    totalHits = images.totalHits;
+
+    Notify.success(`Hooray! We found ${totalHits} images.`);
+
+    totalHits -= images.hits.length;
+
+    addToHTML(galleryMarkup(images.hits));
+
+    if (totalHits !== 0) {
+      selectors.loadMoreBtn.classList.remove('is-hidden');
+    } else {
+      selectors.loadMoreBtn.classList.add('is-hidden');
+    }
+
+    gallery.refresh();
+  } catch (error) {
+    console.error('An error occurred during the search:', error);
+    Notify.failure('Oops! Something went wrong. Please try again later.');
+  }
 }
 
 async function onLoadMore() {
