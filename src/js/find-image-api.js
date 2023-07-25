@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://pixabay.com/api/';
+const BASE_URL =
+  'https://thingproxy.freeboard.io/fetch/https://pixabay.com/api/';
+
+
 const API_KEY = '38328018-adf92d25e5f0a3816743083dd';
 
 const params = {
@@ -20,6 +23,7 @@ export default class AxiosApiService {
   async fetchImages() {
     try {
       const url = `${BASE_URL}?q=${this.searchQuery}&page=${this.page}`;
+      console.log('URL:', url);
       const response = await axios.get(url, { params });
 
       this.incrementPage();
