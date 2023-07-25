@@ -3,8 +3,8 @@ import axios from 'axios';
 const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '38328018-adf92d25e5f0a3816743083dd';
 
-axios.defaults.baseURL = BASE_URL;
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+// axios.defaults.baseURL = BASE_URL;
+// axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 const params = {
   key: API_KEY,
@@ -21,7 +21,7 @@ export default class AxiosApiService {
   }
 
   async fetchImages() {
-    const url = `?q=${this.searchQuery}&page=${this.page}`;
+    const url = `${BASE_URL}?q=${this.searchQuery}&page=${this.page}`;
     const response = await axios.get(url, { params });
     this.incrementPage();
     return response.data;
