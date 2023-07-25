@@ -9,12 +9,6 @@ const selectors = {
   loadMoreGuard: document.querySelector('.js-guard'),
 };
 
-const simpleLightbox = new SimpleLightbox('.photo-card a', {
-  captionsData: 'alt',
-  captionDelay: 250,
-  captionPosition: 'bottom',
-});
-
 selectors.form.addEventListener('submit', onSearchClick);
 
 const options = {
