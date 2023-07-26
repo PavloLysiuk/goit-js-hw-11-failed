@@ -35,29 +35,29 @@ async function onSearch(e) {
     axiosApiService.resetPage();
     axiosApiService.query = e.currentTarget.elements.searchQuery.value.trim();
 
-    // const images = await axiosApiService.fetchImages();
-    axiosApiService.fetchImages().then(images => {
-      if (images.hits.length === 0) {
-        selectors.spinner.classList.add('is-hidden');
-        Notify.failure(
-          'Sorry, there are no images matching your search query. Please try again.'
-        );
-        return;
-      }
+    const images = await axiosApiService.fetchImages();
 
-      totalHits = images.totalHits;
-      Notify.success(`Hooray! We found ${totalHits} images.`);
-      totalHits -= images.hits.length;
-      addToHTML(galleryMarkup(images.hits));
+    if (images.hits.length === 0) {
       selectors.spinner.classList.add('is-hidden');
-      gallery.refresh();
-    });
+      Notify.failure(
+        'Sorry, there are no images matching your search query. Please try again.'
+      );
+      return;
+    }
+
+    totalHits = images.totalHits;
+    Notify.success(`Hooray! We found ${totalHits} images.`);
+    totalHits -= images.hits.length;
+    addToHTML(galleryMarkup(images.hits));
+    selectors.spinner.classList.add('is-hidden');
 
     // if (totalHits !== 0) {
     //   selectors.loadMoreBtn.classList.remove('is-hidden');
     // } else {
     //   selectors.loadMoreBtn.classList.add('is-hidden');
     // }
+
+    gallery.refresh();
   } catch (error) {
     selectors.spinner.classList.add('is-hidden');
     console.error('An error occurred during the search:', error);
