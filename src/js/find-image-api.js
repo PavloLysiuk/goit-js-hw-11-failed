@@ -3,7 +3,6 @@ import axios from 'axios';
 const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '38328018-adf92d25e5f0a3816743083dd';
 
-
 // axios.defaults.baseURL = BASE_URL;
 // axios.defaults.headers.post['Content-Type'] = 'application/json';
 
@@ -16,13 +15,13 @@ export default class AxiosApiService {
         'Content-Type': 'application/json',
       },
       params: {
-        'key': API_KEY,
-        'image_type': 'photo',
-        'orientation': 'horizontal',
-        'per_page': 40,
-        'safesearch': true,
-        'searchQuery': '',
-        'page': 1,
+        key: API_KEY,
+        image_type: 'photo',
+        orientation: 'horizontal',
+        per_page: 40,
+        safesearch: true,
+        searchQuery: '',
+        page: 1,
       },
     };
   }

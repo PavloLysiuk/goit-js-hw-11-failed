@@ -30,7 +30,6 @@ async function onSearch(e) {
     if (e.currentTarget.elements.searchQuery.value.trim() === '') {
       selectors.spinner.classList.add('is-hidden');
       return Notify.failure('Please, enter a search query.');
-
     }
 
     axiosApiService.resetPage();
