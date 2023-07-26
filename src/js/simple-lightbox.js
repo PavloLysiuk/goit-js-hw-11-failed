@@ -7,4 +7,4 @@ let gallery = new SimpleLightbox('.photo-card a', {
   captionDelay: 250,
 });
 
-export { gallery };
+export default gallery;

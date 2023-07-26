@@ -1,7 +1,7 @@
 import AxiosApiService from './js/find-image-api';
 import galleryMarkup from './js/gallery-markup';
 import smoothScroll from './js/smooth-scroll';
-import { gallery } from './js/simple-lightbox';
+import gallery from './js/simple-lightbox';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const axiosApiService = new AxiosApiService();
