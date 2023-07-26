@@ -28,7 +28,9 @@ async function onSearch(e) {
     selectors.spinner.classList.remove('is-hidden');
 
     if (e.currentTarget.elements.searchQuery.value.trim() === '') {
+      selectors.spinner.classList.add('is-hidden');
       return Notify.failure('Please, enter a search query.');
+
     }
 
     axiosApiService.resetPage();
@@ -37,6 +39,7 @@ async function onSearch(e) {
     const images = await axiosApiService.fetchImages();
 
     if (images.hits.length === 0) {
+      selectors.spinner.classList.add('is-hidden');
       Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
@@ -57,6 +60,7 @@ async function onSearch(e) {
 
     gallery.refresh();
   } catch (error) {
+    selectors.spinner.classList.add('is-hidden');
     console.error('An error occurred during the search:', error);
     console.error('Error response:', error.response);
     console.error('Error request:', error.request);
