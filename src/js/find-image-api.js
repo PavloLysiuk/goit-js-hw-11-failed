@@ -22,7 +22,8 @@ export default class AxiosApiService {
 
   async fetchImages() {
     const url = `?q=${this.searchQuery}&page=${this.page}&key=${API_KEY}`;
-    const response = await axios.get(url);
+    const response = await axios(url);
+    // const response = await axios.get(url, { params });
     this.incrementPage();
     return response.data;
   }
