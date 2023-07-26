@@ -1,7 +1,7 @@
 import AxiosApiService from './js/find-image-api';
 import galleryMarkup from './js/gallery-markup';
 import smoothScroll from './js/smooth-scroll';
-import gallery from './js/simple-lightbox';
+import galleryLightbox from './js/simple-lightbox';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const axiosApiService = new AxiosApiService();
@@ -57,7 +57,7 @@ async function onSearch(e) {
     //   selectors.loadMoreBtn.classList.add('is-hidden');
     // }
 
-    gallery.refresh();
+    galleryLightbox.refresh();
   } catch (error) {
     selectors.spinner.classList.add('is-hidden');
     console.error('An error occurred during the search:', error);
@@ -81,7 +81,7 @@ async function onSearch(e) {
 //     return;
 //   }
 
-//   gallery.refresh();
+//   galleryLightbox.refresh();
 //   smoothScroll();
 // }
 
@@ -110,7 +110,7 @@ async function infiniteScroll() {
     page += 1;
 
     addToHTML(galleryMarkup(images.hits));
-    gallery.refresh();
+    galleryLightbox.refresh();
     smoothScroll();
   } catch (error) {
     console.error('An error occurred while loading more images:', error);
